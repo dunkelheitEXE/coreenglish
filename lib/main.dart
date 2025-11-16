@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'lessons.dart';
 
 void main() {
   runApp(const EnglishLearningApp());
@@ -54,7 +55,7 @@ class MainMenuScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Learn English',
+                      'Core English',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -96,7 +97,12 @@ class MainMenuScreen extends StatelessWidget {
                         title: 'Lecciones',
                         color: Colors.orange,
                         onTap: () {
-                          _showComingSoon(context, 'Lecciones');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LessonsScreen(),
+                            ),
+                          );
                         },
                       ),
                       MenuCard(

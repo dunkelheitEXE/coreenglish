@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'lessons/basic/greetings.dart';
+import 'lessons/basic/verbtobe.dart';
+import 'lessons/basic/personalPronouns.dart';
 
 class LessonsScreen extends StatelessWidget {
   const LessonsScreen({Key? key}) : super(key: key);
-
-  void grettings() {}
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,11 @@ class LessonsScreen extends StatelessWidget {
               description: 'Hello, Goodbye, Good morning...',
               progress: 0.0,
               isLocked: false,
-              onTap: () => _showLessonDetail(context, 'Greetings and Farewells'),
+              onTap: () => _showLessonDetail(
+                context,
+                'Greetings and Farewells',
+                lessonType: LessonType.greetings,
+              ),
             ),
             LessonCard(
               lessonNumber: 2,
@@ -40,51 +45,73 @@ class LessonsScreen extends StatelessWidget {
               description: 'I, You, He, She, It, We, They',
               progress: 0.0,
               isLocked: false,
-              onTap: () => _showLessonDetail(context, 'Personal Pronouns'),
+              onTap: () => _showLessonDetail(
+                context,
+                'Personal Pronouns',
+                lessonType: LessonType.pronouns,
+              ),
             ),
             LessonCard(
               lessonNumber: 3,
               title: 'Verb To Be',
               description: 'Am, Is, Are - Simple present',
               progress: 0.0,
-              isLocked: true,
-              onTap: () {},
+              isLocked: false, // ✅ Desbloqueado
+              onTap: () => _showLessonDetail(
+                context,
+                'Verb To Be',
+                lessonType: LessonType.verbToBe,
+              ),
             ),
-            
+
             const SizedBox(height: 20),
-            
+
             // Intermediate Level Section
-            const SectionHeader(title: 'Intermediate Level', icon: Icons.trending_up),
+            const SectionHeader(
+                title: 'Intermediate Level', icon: Icons.trending_up),
             const SizedBox(height: 10),
             LessonCard(
               lessonNumber: 4,
               title: 'Verb Tenses',
               description: 'Present, Past, Future',
               progress: 0.0,
-              isLocked: true,
-              onTap: () {},
+              isLocked: false, // ✅ Desbloqueado
+              onTap: () => _showLessonDetail(
+                context,
+                'Verb Tenses',
+                lessonType: LessonType.verbTenses,
+              ),
             ),
             LessonCard(
               lessonNumber: 5,
               title: 'Prepositions',
               description: 'In, On, At, Under, Between...',
               progress: 0.0,
-              isLocked: true,
-              onTap: () {},
+              isLocked: false, // ✅ Desbloqueado
+              onTap: () => _showLessonDetail(
+                context,
+                'Prepositions',
+                lessonType: LessonType.prepositions,
+              ),
             ),
-            
+
             const SizedBox(height: 20),
-            
+
             // Advanced Level Section
-            const SectionHeader(title: 'Advanced Level', icon: Icons.emoji_events),
+            const SectionHeader(
+                title: 'Advanced Level', icon: Icons.emoji_events),
             const SizedBox(height: 10),
             LessonCard(
               lessonNumber: 6,
               title: 'Phrasal Verbs',
               description: 'Give up, Look for, Take off...',
               progress: 0.0,
-              isLocked: true,
-              onTap: () {},
+              isLocked: false, // ✅ Desbloqueado
+              onTap: () => _showLessonDetail(
+                context,
+                'Phrasal Verbs',
+                lessonType: LessonType.phrasalVerbs,
+              ),
             ),
           ],
         ),
@@ -92,7 +119,11 @@ class LessonsScreen extends StatelessWidget {
     );
   }
 
-  static void _showLessonDetail(BuildContext context, String lessonTitle) {
+  static void _showLessonDetail(
+    BuildContext context,
+    String lessonTitle, {
+    LessonType? lessonType,
+  }) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -100,7 +131,8 @@ class LessonsScreen extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.play_circle_outline, size: 60, color: Colors.orange),
+            const Icon(Icons.play_circle_outline,
+                size: 60, color: Colors.orange),
             const SizedBox(height: 20),
             const Text(
               'Ready to start!',
@@ -120,13 +152,12 @@ class LessonsScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Lesson content coming soon...'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
+              Navigator.pop(context); // Cierra el diálogo
+
+              // Navega a la página correspondiente según la lección
+              if (lessonType != null) {
+                _navigateToLesson(context, lessonType);
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
@@ -137,9 +168,62 @@ class LessonsScreen extends StatelessWidget {
       ),
     );
   }
+
+  static void _navigateToLesson(BuildContext context, LessonType lessonType) {
+    Widget? lessonPage;
+
+    switch (lessonType) {
+      case LessonType.greetings:
+        lessonPage = const Greetings();
+        break;
+
+      case LessonType.pronouns:
+        lessonPage = const PersonalPronouns();
+        break;
+
+      case LessonType.verbToBe:
+        lessonPage = const VerbToBe(); // ✅ Navegación agregada
+        break;
+
+      case LessonType.verbTenses:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Verb Tenses lesson coming soon...')),
+        );
+        break;
+
+      case LessonType.prepositions:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Prepositions lesson coming soon...')),
+        );
+        break;
+
+      case LessonType.phrasalVerbs:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Phrasal Verbs lesson coming soon...')),
+        );
+        break;
+    }
+
+    if (lessonPage != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => lessonPage!),
+      );
+    }
+  }
 }
 
-// Widget for section headers
+// Enum para identificar las lecciones
+enum LessonType {
+  greetings,
+  pronouns,
+  verbToBe,
+  verbTenses,
+  prepositions,
+  phrasalVerbs,
+}
+
+// Widgets auxiliares
 class SectionHeader extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -154,14 +238,13 @@ class SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: Colors.orange.shade700, size: 28),
-        const SizedBox(width: 10),
+        Icon(icon, color: Colors.orange),
+        const SizedBox(width: 8),
         Text(
           title,
-          style: TextStyle(
-            fontSize: 22,
+          style: const TextStyle(
+            fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.orange.shade700,
           ),
         ),
       ],
@@ -169,7 +252,6 @@ class SectionHeader extends StatelessWidget {
   }
 }
 
-// Widget for each lesson card
 class LessonCard extends StatelessWidget {
   final int lessonNumber;
   final String title;
@@ -191,42 +273,22 @@ class LessonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 3,
+      elevation: 2,
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
       child: InkWell(
         onTap: isLocked ? null : onTap,
-        borderRadius: BorderRadius.circular(15),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // Lesson number or lock
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: isLocked ? Colors.grey.shade300 : Colors.orange.shade100,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: isLocked
-                      ? const Icon(Icons.lock, color: Colors.grey)
-                      : Text(
-                          '$lessonNumber',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.orange.shade700,
-                          ),
-                        ),
-                ),
+              CircleAvatar(
+                backgroundColor: isLocked ? Colors.grey : Colors.orange,
+                child: isLocked
+                    ? const Icon(Icons.lock, color: Colors.white)
+                    : Text('$lessonNumber',
+                        style: const TextStyle(color: Colors.white)),
               ),
               const SizedBox(width: 16),
-              
-              // Lesson content
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,42 +298,32 @@ class LessonCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: isLocked ? Colors.grey : Colors.black87,
+                        color: isLocked ? Colors.grey : Colors.black,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       description,
                       style: TextStyle(
-                        fontSize: 14,
-                        color: isLocked ? Colors.grey.shade400 : Colors.grey.shade600,
+                        fontSize: 12,
+                        color: isLocked ? Colors.grey : Colors.grey.shade600,
                       ),
                     ),
-                    if (progress > 0 && !isLocked) ...[
+                    if (!isLocked && progress > 0) ...[
                       const SizedBox(height: 8),
                       LinearProgressIndicator(
                         value: progress,
-                        backgroundColor: Colors.grey.shade200,
+                        backgroundColor: Colors.grey.shade300,
                         color: Colors.orange,
                       ),
                     ],
                   ],
                 ),
               ),
-              
-              // Status icon
               Icon(
-                isLocked
-                    ? Icons.lock_outline
-                    : progress >= 1.0
-                        ? Icons.check_circle
-                        : Icons.play_circle_outline,
-                color: isLocked
-                    ? Colors.grey
-                    : progress >= 1.0
-                        ? Colors.green
-                        : Colors.orange,
-                size: 28,
+                isLocked ? Icons.lock : Icons.arrow_forward_ios,
+                color: isLocked ? Colors.grey : Colors.orange,
+                size: 20,
               ),
             ],
           ),

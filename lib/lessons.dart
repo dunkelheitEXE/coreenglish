@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'lessons/basic/greetings.dart';
 import 'lessons/basic/verbtobe.dart';
 import 'lessons/basic/personalPronouns.dart';
+import 'lessons/intermediate/verbTenses.dart';
 
 class LessonsScreen extends StatelessWidget {
   const LessonsScreen({Key? key}) : super(key: key);
@@ -186,9 +187,7 @@ class LessonsScreen extends StatelessWidget {
         break;
 
       case LessonType.verbTenses:
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Verb Tenses lesson coming soon...')),
-        );
+        lessonPage = const VerbTenses();
         break;
 
       case LessonType.prepositions:

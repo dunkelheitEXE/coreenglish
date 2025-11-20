@@ -1,3 +1,5 @@
+import 'package:coreenglish/lessons/intermediate/phrasal.dart';
+import 'package:coreenglish/lessons/intermediate/prepositions.dart';
 import 'package:flutter/material.dart';
 import 'lessons/basic/greetings.dart';
 import 'lessons/basic/verbtobe.dart';
@@ -191,15 +193,11 @@ class LessonsScreen extends StatelessWidget {
         break;
 
       case LessonType.prepositions:
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Prepositions lesson coming soon...')),
-        );
+        lessonPage = const Prepositions();
         break;
 
       case LessonType.phrasalVerbs:
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Phrasal Verbs lesson coming soon...')),
-        );
+        lessonPage = const PhrasalVerbs();
         break;
     }
 

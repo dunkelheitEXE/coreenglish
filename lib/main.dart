@@ -1,5 +1,7 @@
+import 'package:coreenglish/games/soup/theme_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'lessons.dart';
+import 'vocabulary/vocabulary.dart';
 
 void main() {
   runApp(const EnglishLearningApp());
@@ -110,7 +112,12 @@ class MainMenuScreen extends StatelessWidget {
                         title: 'Vocabulario',
                         color: Colors.green,
                         onTap: () {
-                          _showComingSoon(context, 'Vocabulario');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ITVocabulary(),
+                            ),
+                          );
                         },
                       ),
                       MenuCard(
@@ -142,7 +149,12 @@ class MainMenuScreen extends StatelessWidget {
                         title: 'Juegos',
                         color: Colors.pink,
                         onTap: () {
-                          _showComingSoon(context, 'Juegos');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ThemeSelectionScreen(),
+                            ),
+                          );
                         },
                       ),
                     ],

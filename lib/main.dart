@@ -1,4 +1,4 @@
-import 'package:coreenglish/games/soup/theme_selection_screen.dart';
+import 'package:coreenglish/word_search/word_search_game.dart';
 import 'package:flutter/material.dart';
 import 'lessons.dart';
 import 'vocabulary/vocabulary.dart';
@@ -149,10 +149,11 @@ class MainMenuScreen extends StatelessWidget {
                         title: 'Juegos',
                         color: Colors.pink,
                         onTap: () {
+                          // _showComingSoon(context, 'Conversación');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ThemeSelectionScreen(),
+                              builder: (context) => const WordSearchGame(),
                             ),
                           );
                         },

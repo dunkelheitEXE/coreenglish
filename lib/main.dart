@@ -1,3 +1,4 @@
+import 'package:coreenglish/listening.dart';
 import 'package:coreenglish/word_search/word_search_game.dart';
 import 'package:flutter/material.dart';
 import 'lessons.dart';
@@ -125,7 +126,12 @@ class MainMenuScreen extends StatelessWidget {
                         title: 'Listening',
                         color: Colors.blue,
                         onTap: () {
-                          _showComingSoon(context, 'Listening');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ListeningScreen(),
+                            ),
+                          );
                         },
                       ),
                       MenuCard(
